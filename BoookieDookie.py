@@ -47,8 +47,8 @@ def search_google_books(query: str) -> Union[Dict, None]:
     return None
 
 
-def process_image_and_search_book(result_frame: tk.Frame, history_frame: tk.Frame):
-    """Загружает изображение, распознаёт текст и ищет книгу по этому тексту."""
+def process_image_and_search_book(notebook: ttk.Notebook, result_frame: tk.Frame, history_frame: tk.Frame):
+    """Обрабатывает изображение и ищет книгу."""
     image_path = filedialog.askopenfilename(filetypes=[("Изображения", "*.*")])
     if not image_path:
         return
@@ -64,6 +64,8 @@ def process_image_and_search_book(result_frame: tk.Frame, history_frame: tk.Fram
 
     if book_info:
         search_history.append(book_info)
+        update_search_history(history_frame)
+
         tk.Label(result_frame, text=f"Название: {book_info['title']}", font=("Arial", 14, "bold")).pack()
         tk.Label(result_frame, text=f"Автор: {book_info['authors']}", font=("Arial", 12)).pack()
         if book_info.get("cover_image"):
@@ -78,7 +80,10 @@ def process_image_and_search_book(result_frame: tk.Frame, history_frame: tk.Fram
     else:
         tk.Label(result_frame, text="Книга не найдена.", font=("Arial", 14)).pack()
 
-    update_search_history(history_frame)
+    tk.Button(result_frame, text="Назад", font=("Arial", 12),
+              command=lambda: notebook.select(0)).pack(pady=10)
+
+    notebook.select(1)
 
 
 def update_search_history(history_frame: tk.Frame):
@@ -102,45 +107,44 @@ def show_about_program():
     """Отображает информацию о программе."""
     messagebox.showinfo(
         "О программе",
-        "Big Balls\nВерсия 1.0\nNothing interesting here :)."
+        "Big Balls\nVersion 1.0\nNothing interesting here :)"
     )
 
 
 def create_main_window():
     root = tk.Tk()
-    root.title("ShazamForBooks")
+    root.title("BookieDookie")
     root.geometry("800x600")
 
-    # Создание стилей
-    style = ttk.Style(root)
-    style.configure("TNotebook", background="#f0f0f0")
-    style.configure("TNotebook.Tab", background="#e0e0e0", padding=[10, 5])
-    style.map("TNotebook.Tab", background=[("selected", "#d0d0d0")])  # Цвет активной вкладки
-
-    # Создание вкладок
     notebook = ttk.Notebook(root)
     notebook.pack(fill="both", expand=True)
 
     tab_search = ttk.Frame(notebook)
-    tab_history = ttk.Frame(notebook)
-    tab_about = ttk.Frame(notebook)
-
     notebook.add(tab_search, text="Поиск")
+
+    tab_result = ttk.Frame(notebook)
+    notebook.add(tab_result, text="Ваша книга")
+
+    tab_history = ttk.Frame(notebook)
     notebook.add(tab_history, text="История")
+
+    tab_about = ttk.Frame(notebook)
     notebook.add(tab_about, text="О программе")
 
     tk.Label(tab_search, text="Загрузить изображение", font=("Arial", 14)).pack(pady=10)
     tk.Button(tab_search, text="Загрузить", font=("Arial", 12),
-              command=lambda: process_image_and_search_book(tab_search, tab_history)).pack(pady=5)
+              command=lambda: process_image_and_search_book(notebook, tab_result, tab_history)).pack(pady=5)
 
-    tk.Label(tab_history, text="История поиска", font=("Arial", 14)).pack(pady=10)
+    update_search_history(tab_history)
     tk.Button(tab_history, text="Очистить историю", font=("Arial", 12),
               command=lambda: clear_search_history(tab_history)).pack(pady=5)
 
-    tk.Label(tab_about, text="О программе", font=("Arial", 14)).pack(pady=10)
-    tk.Label(tab_about, text="Big Balls Version 1.0", font=("Arial", 12)).pack(pady=5)
+    tk.Label(tab_about, text="Big Balls Version 1.0", font=("Arial", 12)).pack(pady=10)
+    tk.Button(tab_about, text="О программе", font=("Arial", 12),
+              command=show_about_program).pack(pady=5)
 
     root.mainloop()
+
 
 if __name__ == "__main__":
     create_main_window()
