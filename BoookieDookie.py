@@ -131,7 +131,7 @@ def create_main_window():
     tab_about = ttk.Frame(notebook)
     notebook.add(tab_about, text="О программе")
 
-    tk.Label(tab_search, text="Загрузить изображение", font=("Arial", 14)).pack(pady=10)
+    tk.Label(tab_search, text="Загрузитите вашу страницу", font=("Arial", 14)).pack(pady=10)
     tk.Button(tab_search, text="Загрузить", font=("Arial", 12),
               command=lambda: process_image_and_search_book(notebook, tab_result, tab_history)).pack(pady=5)
 

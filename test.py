@@ -1,22 +1,13 @@
-import unittest
-from __main__ import recognize_text, search_google_books
+import pytest
+from AiP.BoookieDookie import recognize_text, search_google_books
 
-class TestMain(unittest.TestCase):
 
-    def test_recognize_text(self):
-        result = recognize_text("example.png")
-        self.assertIsInstance(result, str)
-        self.assertGreater(len(result), 0)
+def test_recognize_text():
+    assert recognize_text("tests/sample_image.png") != ""
 
-    def test_search_google_books_valid_query(self):
-        result = search_google_books("Harry Potter")
-        self.assertIsNotNone(result)
-        self.assertIn("title", result)
-        self.assertIn("authors", result)
 
-    def test_search_google_books_invalid_query(self):
-        result = search_google_books("")
-        self.assertIsNone(result)
-
-if __name__ == "__main__":
-    unittest.main()
+def test_search_google_books():
+    book = search_google_books("Python programming")
+    assert book is not None
+    assert "title" in book
+    assert "authors" in book

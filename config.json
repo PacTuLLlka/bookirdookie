@@ -1,3 +1,5 @@
 {
-  "google_books_api_key": "AIzaSyD5YvEHkOcMAFNsIan9ZVTY1jALiS6O400"
+  "google_books_api_key": "AIzaSyD5YvEHkOcMAFNsIan9ZVTY1jALiS6O400",
+  "tesseract_path": "/opt/homebrew/bin/tesseract",
+    "language": "rus+eng"
 }
