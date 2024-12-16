@@ -17,7 +17,7 @@ def search_google_books(query: str) -> Union[Dict, None]:
             return {
                 "title": book_data.get("title", "Неизвестно"),
                 "authors": ", ".join(book_data.get("authors", ["Неизвестно"])),
-                "cover_image": book_data.get("imageLinks", {}).get("thumbnail")
+                "cover_image": book_data.get("imageLinks", {}).get("thumbnail"),
             }
     except Exception as e:
         logging.error(f"Ошибка Google Books API: {e}")
