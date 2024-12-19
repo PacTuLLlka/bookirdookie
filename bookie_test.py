@@ -11,7 +11,6 @@ def mock_image(tmp_path):
     image = Image.new("RGB", (200, 100), "white")
     draw = ImageDraw.Draw(image)
     draw.text((10, 40), "Test OCR", fill="black")
-    # Сохраняем изображение во временный файл
     image_path = tmp_path / "test_image.png"
     image.save(image_path)
     return str(image_path)
@@ -25,7 +24,6 @@ def test_recognize_text(mock_image):
 
 def test_search_google_books():
     """Тестирует поиск книги через Google Books API."""
-    # Мокаем ответ от Google Books API
     mocked_response = {
         "items": [
             {
@@ -46,7 +44,6 @@ def test_search_google_books():
         query = "Mocked Query"
         result = search_google_books(query)
 
-        # Проверки
         assert result is not None, "search_google_books вернула None, но ожидался результат."
         assert result["title"] == "Mocked Book Title", "Название книги не совпадает."
         assert result["authors"] == "Mocked Author", "Автор книги не совпадает."
@@ -55,7 +52,6 @@ def test_search_google_books():
 
 def test_clear_search_history():
     """Тестирует очистку истории поиска."""
-    # Добавляем тестовые данные
     search_history.append({"title": "Test Book", "authors": "Test Author"})
 
     assert len(search_history) > 0, "История поиска не должна быть пустой перед очисткой."
@@ -65,6 +61,5 @@ def test_clear_search_history():
 
     search_history.clear()
 
-    # Проверяем, что история очистилась
     assert len(search_history) == 0, "История поиска не была очищена."
     assert search_history == [], "История поиска должна быть пустой после очистки."
