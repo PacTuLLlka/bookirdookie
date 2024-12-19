@@ -14,7 +14,6 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-# Получим путь к tesseract через argparse
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Настройка путей для программы.")
     parser.add_argument(
