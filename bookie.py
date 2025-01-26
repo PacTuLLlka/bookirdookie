@@ -14,7 +14,6 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-# Получим путь к tesseract через argparse
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Настройка путей для программы.")
     parser.add_argument(
@@ -117,7 +116,7 @@ def process_image_and_search_book(
                 ).resize((150, 200))
                 photo = ImageTk.PhotoImage(cover_image)
                 label = tk.Label(result_frame, image=photo)
-                label.image = photo  # Хранение ссылки на изображение, чтобы не очищалось
+                label.image = photo
                 label.pack()
             except Exception:
                 pass
@@ -200,8 +199,8 @@ def create_main_window():
         tab_search,
         text="Загрузить",
         font=("Arial", 12),
-        command=lambda: process_image_and_search_book(
-            notebook, tab_result, tab_history
+            command=lambda: process_image_and_search_book(
+                notebook, tab_result, tab_history
         ),
     ).pack(pady=5)
 
@@ -213,7 +212,7 @@ def create_main_window():
         command=lambda: clear_search_history(tab_history),
     ).pack(pady=5)
 
-    tk.Label(tab_about, text="BookieDookie Version 1.0", font=("Arial", 12)).pack(pady=10)
+    tk.Label(tab_about, text="ShazamForBooks", font=("Arial", 12)).pack(pady=10)
     tk.Button(
         tab_about, text="О программе", font=("Arial", 12), command=show_about_program
     ).pack(pady=5)
